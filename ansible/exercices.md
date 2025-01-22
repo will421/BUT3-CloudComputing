@@ -91,3 +91,13 @@ Votre playbook executera tout ces roles en local.
 1. Reprendre l'exercice 5.
 2. Ajouter un [handler](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html) au role `bash_config`. Ce sera une simple tache de debug affichant le message "Fichier .bashrc modifié".
 3. Déclencher cet handler lors de la modification du fichier `.bashrc`
+
+## Exercice bonus : Configurer une stack Grafana-Prometheus sur Docker pour surveiller les ressources systèmes
+
+1. Créer un playbook récupérant les images docker suivantes à l'aide du module `containers.podman.podman_image` :
+- docker.io/grafana/grafana
+- docker.io/prom/prometheus
+- docker.io/prom/node-exporter
+
+2. Créer un réseau `monitoring_network` à l'aide du module `containers.podman.podman_network`
+3. TODO

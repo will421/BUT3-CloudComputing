@@ -1,0 +1,61 @@
+- name: Deploy Grafana with Docker
+  hosts: localhost
+  tasks:
+  - name : Creation du reseau
+    containers.podman.podman_network:
+      name: monitoring_network
+      state: present
+
+  - name: Pull Grafana Docker image
+    containers.podman.podman_image:
+      name: grafana/grafana
+      tag: latest
+
+  - name: Run container
+    containers.podman.podman_container:
+      name: grafana
+      image: grafana/grafana:latest
+      state: started
+      ports:
+        - "3000:3000"
+      network:
+        - monitoring_network
+      volumes:
+      - ./files/grafana-provisioning:/etc/grafana/provisioning
+
+  - name: Pull Prometheus Docker image
+    containers.podman.podman_image:
+      name: docker.io/prom/prometheus
+
+  - name: Run Prometheus container
+    containers.podman.podman_container:
+      name: prometheus
+      image: prom/prometheus:latest
+      state: started
+      ports:
+        - "9090:9090"
+      volumes:
+        - ./files/prometheus.yml:/etc/prometheus/prometheus.yml
+      network:
+        - monitoring_network
+
+  - name: Pull Node Exporter Docker image
+    containers.podman.podman_image:
+      name: docker.io/prom/node-exporter
+      tag: latest
+
+  - name: Run Node Exporter container
+    containers.podman.podman_container:
+      name: node-exporter
+      image: prom/node-exporter:latest
+      state: started
+      ports:
+        - "9100:9100"
+      network:
+        - monitoring_network
+      volumes:
+        - "/proc:/host/proc:ro"
+        - "/sys:/host/sys:ro"
+        - "/:/rootfs:ro"
+      env:
+        NODE_EXPORTER_TEXTFILE_DIRECTORY: "/host/proc"
