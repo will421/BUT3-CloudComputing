@@ -83,3 +83,9 @@ tar -czf ~/backup/projects_$(date +%Y%m%d).tar.gz ~/projects
 ```
 
 Votre playbook executera tout ces roles en local.
+
+## Exercice 6
+
+1. Reprendre l'exercice 5.
+2. Ajouter un [handler](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html) au role `bash_config`. Ce sera une simple tache de debug affichant le message "Fichier .bashrc modifié".
+3. Déclencher cet hander lors de la modification du fichier `.bashrc`
