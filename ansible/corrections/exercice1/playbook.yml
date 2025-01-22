@@ -1,0 +1,13 @@
+---
+- name: Création de dossier avec variable
+  hosts: all
+  vars:
+    workdir: "/tmp/ex1"
+  tasks:
+    - name: Créer un dossier
+      ansible.builtin.file:
+        path: "{{ workdir }}"
+        state: directory
+    - name: Afficher ansible_facts
+      ansible.builtin.debug:
+        var: ansible_facts
