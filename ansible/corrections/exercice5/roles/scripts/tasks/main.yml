@@ -1,0 +1,4 @@
+- name: Copier script de backup
+  ansible.builtin.copy:
+    src: backup.sh
+    dest: "{{ home }}/scripts/backup.sh"

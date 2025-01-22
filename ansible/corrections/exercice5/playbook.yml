@@ -1,0 +1,8 @@
+- name: Configuration
+  hosts: localhost
+  vars:
+    home: "~"
+  roles:
+    - init_structure
+    - bash_config
+    - scripts

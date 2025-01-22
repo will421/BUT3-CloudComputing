@@ -1,0 +1,8 @@
+- name: Creer dossiers
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ home }}/projects"
+    - "{{ home }}/scripts"
+    - "{{ home }}/backup"
