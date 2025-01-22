@@ -1,0 +1,9 @@
+---
+git:
+  hosts:
+    localhost:
+      ansible_connection: local
+configuration:
+  hosts:
+    localhost:
+      ansible_connection: local

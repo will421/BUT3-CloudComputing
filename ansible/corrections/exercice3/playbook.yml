@@ -1,0 +1,20 @@
+---
+- name: Git checkout
+  hosts: git
+  vars:
+    workdir: /tmp/ex3-1
+  tasks:
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: https://github.com/will421/BUT3-CloudComputing.git
+        dest: "{{ workdir }}"
+- name: Creation de configuration
+  hosts: configuration
+  vars:
+    workdir: /tmp/ex3-2
+  tasks:
+    - name: Création dossier
+      ansible.builtin.file:
+        path: "{{ workdir }}/{{ env }}"
+        state: directory
+      when: env is defined and env | length > 0
