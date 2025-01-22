@@ -53,7 +53,7 @@ ansible-playbook -i inventory.yml playbook.yml
 ## Exercice 3
 
 1. Reprendre le projet de l'exercice 2.
-2. Modifier le playbook pour utiliser le mot clé [when](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#basic-conditionals-with-when) et créer uniquement le dossier basé sur une variable `env`. Cette variable devra être fourni au playbook par un paramètre de ligne de commande.
+2. Modifier le playbook pour utiliser le mot clé [when](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_conditionals.html#basic-conditionals-with-when) et créer uniquement le dossier basé sur une variable `env`. Si la variable n'est pas défini, la tache doit etre ignorée.  Cette variable devra être fourni au playbook par un paramètre de ligne de commande. 
 
 ## Exercice 4
 
