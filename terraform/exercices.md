@@ -33,7 +33,7 @@ resource "docker_image" "hello_world" {
 
 ## Exercice 1
 
-1. Créer une configuration Terraform lancant un conteneur basé sur l'image hello-world. Voir [docker_container](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container).
+1. Créer une configuration Terraform lancant un conteneur basé sur l'image `docker.io/hello-world`. Voir [docker_container](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container).
 2. Lancer `tofu plan` et étudier le résultat
 3. Lancer `tofu apply` et vérifier l'état du conteneur avec `docker ps`.
 4. Lancer `tofu apply` avec le conteneur déja lancé
