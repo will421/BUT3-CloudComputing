@@ -98,3 +98,11 @@ resource "docker_image" "hello_world" {
 3. Créer "manuellement" un fichier `external.txt` avec le contenu `external`
 4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
 5. Dans votre configuration, utiliser une datasource pour copier le contenu du fichier `external.txt` dans un nouveau fichier. Voir [local_file](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
+
+## Exercice 3 (Azure)
+
+1. Repartir de l'exercice 3
+2. Supprimer les ressources avec `tofu destroy` et vérifier qu'ils n'existent plus
+3. Créer "manuellement" un ressource_group sur le portail Azure
+4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
+5. Dans votre configuration, utiliser une datasource pour référencer la ressource_group et créer une VM dedans.  Voir [resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) et [azurerm_virtual_machine](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine)
