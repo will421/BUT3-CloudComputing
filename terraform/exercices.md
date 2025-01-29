@@ -41,7 +41,7 @@ resource "docker_image" "hello_world" {
 
 ## Exercice 1 (sans docker)
 
-1. Créer une configuration Terraform créant une fichier local avec le contenu "test". Voir [local_file](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file).
+1. Créer une configuration Terraform créant un fichier local avec le contenu "test". Voir [local_file](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file).
 2. Lancer `tofu plan` et étudier le résultat
 3. Lancer `tofu apply` et vérifier la présence du fichier
 4. Supprimer le fichier et lancer `tofu apply`
@@ -82,3 +82,19 @@ resource "docker_image" "hello_world" {
 3. Créer une variable `location` pour contenir la région (ex : "WestEurope") et s'en servir dans le resource_group. Essayer avec ou sans valeur par defaut.
 4. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
 5. Rajouter un output sur le champ `id` et le visualier après un `tofu apply` avec `tofu output`. Le comparer avec l'id visible sur le portail Azure
+
+## Exercice 3
+
+1. Repartir de l'exercice 2
+2. Supprimez vos images et conteneurs terraform avec `tofu destroy`
+3. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
+4. Télécharger l'image docker `nginx` en ligne de commande : `docker pull docker.io/nginx`
+5. Dans votre configuration, utiliser une datasource pour référencer cette image dans votre conteneur. Voir [image](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
+
+## Exercice 3 (sans docker)
+
+1. Repartir de l'exercice 3
+2. Supprimer le fichier avec `tofu destroy` et vérifier qu'il n'existe plus
+3. Créer "manuellement" un fichier `external.txt` avec le contenu `external`
+4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
+5. Dans votre configuration, utiliser une datasource pour copier le contenu du fichier `external.txt` dans un nouveau fichier. Voir [local_file](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
