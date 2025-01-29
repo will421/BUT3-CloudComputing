@@ -65,7 +65,7 @@ resource "docker_image" "hello_world" {
 3. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
 4. Remplacer le port externe (8080) par una variable `container_port`. Essayer avec ou sans valeur par defaut.
 5. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
-6. Rajouter un outputde nom `ip_address` et de valeur `localhhost:<port>` et la visualier après un `tofu apply` avec `tofu output`
+6. Rajouter un output de nom `ip_address` et de valeur `localhost:<port>` et la visualier après un `tofu apply` avec `tofu output`
 
 ## Exercice 2 (sans docker)
 
@@ -109,3 +109,49 @@ resource "docker_image" "hello_world" {
 
 ## Exercice 4
 
+Nous voulons surveiller notre machine local au travers d'une page web avec Grafana.
+
+1. Créer le manuellement le fichier `prometheus.yml` contenant :
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+```
+2. Créer manuellement un dossier `grafana-provisioning` et créer un fichier de nom `grafana-provisioning/dashboards/system-stats.json` contenant
+```
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+```
+3. Créer un reseau docker appelé `monitoring_network`
+2. Créer une nouvelle configuration lancant 3 conteneurs :
+* nom: prometheus
+  * image : docker.io/prom/prometheus
+  * port : 9090 -> 9090
+  * volume : < chemin vers votre fichier prometheus > -> /etc/prometheus/prometheus.yml
+  * networks: monitoring_network
+* nom:grafana
+  * image : docker.io/grafana/grafana
+  * port : 3000 -> 3000
+  * volume : < chemin vers votre fichier grafana-provisioning > -> /etc/grafana/provisioning
+  * networks: monitoring_network
+* nom: node-exporter
+  * image : docker.io/prom/node-exporter
+  * port : 9100 -> 9100
+  * volume : 
+    - "/proc:/host/proc:ro"
+    - "/sys:/host/sys:ro"
+    - "/:/rootfs:ro"
+  * env:
+      - name: NODE_EXPORTER_TEXTFILE_DIRECTORY
+        value: "/host/proc"
+  * networks: monitoring_network
