@@ -46,6 +46,16 @@ resource "docker_image" "hello_world" {
 3. Lancer `tofu apply` et vérifier la présence du fichier
 4. Supprimer le fichier et lancer `tofu apply`
 
+## Exercice 1 (Azure)
+
+1. Se connecter à Azure avec la commande `az login`
+2. Il faudra utiliser le provider `azureerm`
+1. Créer une configuration Terraform créant un ressource groupe de nom `test`. Voir [resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group).
+2. Lancer `tofu plan` et étudier le résultat
+3. Lancer `tofu apply` et vérifier le résultat sur Azure.
+4. Lancer `tofu apply` de nouveau.
+5. Supprimer le resource groupe sur le portail Azure  lancer `tofu apply`
+
 ## Exercice 2
 
 1. Créer une configuration terraform lancant un container `nginx` et l'executer :
@@ -57,10 +67,18 @@ resource "docker_image" "hello_world" {
 5. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
 6. Rajouter un output sur le champ `ip_address` du container et la visualier après un `tofu apply` avec `tofu output`
 
-## Exercice 2, sans docker
+## Exercice 2 (sans docker)
 
 1. Reprendre l'exercice 1
 2. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
-3. Créer une variable `permission` pour contenir les permissions du fichier (ex: "0666"). Essayer avec ou sans valeur par defaut.
+3. Créer une variable `permission` pour contenir les permissions du fichier (ex: "0666") et l'utilisation sur le fichier. Essayer avec ou sans valeur par defaut.
 4. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
 5. Rajouter un output sur le champ `content_md5` du fichier et la visualier après un `tofu apply` avec `tofu output`. Le comparer avec le md5 généré avec la commande `md5sum`
+
+## Exercice 2 (Azure)
+
+1. Reprendre l'exercice 1
+2. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
+3. Créer une variable `location` pour contenir la région (ex : "WestEurope") et s'en servir dans le resource_group. Essayer avec ou sans valeur par defaut.
+4. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
+5. Rajouter un output sur le champ `id` et le visualier après un `tofu apply` avec `tofu output`. Le comparer avec l'id visible sur le portail Azure
