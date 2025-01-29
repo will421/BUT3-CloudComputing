@@ -36,12 +36,12 @@ resource "docker_image" "hello_world" {
 1. Créer une configuration Terraform lancant un conteneur basé sur l'image hello-world. Voir [docker_container](https://registry.terraform.io/providers/kreuzwerker/docker/latest/docs/resources/container).
 2. Lancer `tofu plan` et étudier le résultat
 3. Lancer `tofu apply` et vérifier l'état du conteneur avec `docker ps`.
-4. Lancer `tofu apply` avec le conteneur déj//a lancé
+4. Lancer `tofu apply` avec le conteneur déja lancé
 5. Supprimer le conteneur avec `docker container rm` et lancer `tofu apply`
 
-## Exercice 1, sans docker
+## Exercice 1 (sans docker)
 
-1. Créer une configuration Terraform créant une fichier local. Voir [local_file](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file).
+1. Créer une configuration Terraform créant une fichier local avec le contenu "test". Voir [local_file](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file).
 2. Lancer `tofu plan` et étudier le résultat
 3. Lancer `tofu apply` et vérifier la présence du fichier
 4. Supprimer le fichier et lancer `tofu apply`
@@ -55,8 +55,12 @@ resource "docker_image" "hello_world" {
 3. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
 4. Remplacer le port externe (8080) par una variable `container_port`. Essayer avec ou sans valeur par defaut.
 5. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
-6. Rajouter un output sur le champ `ip_address` du container et la visualier apr//es un `tofu apply` avec `tofu output`
+6. Rajouter un output sur le champ `ip_address` du container et la visualier après un `tofu apply` avec `tofu output`
 
 ## Exercice 2, sans docker
 
-WIP
+1. Reprendre l'exercice 1
+2. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
+3. Créer une variable `permission` pour contenir les permissions du fichier (ex: "0666"). Essayer avec ou sans valeur par defaut.
+4. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
+5. Rajouter un output sur le champ `content_md5` du fichier et la visualier après un `tofu apply` avec `tofu output`. Le comparer avec le md5 généré avec la commande `md5sum`
