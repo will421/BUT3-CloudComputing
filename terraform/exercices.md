@@ -65,7 +65,7 @@ resource "docker_image" "hello_world" {
 3. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
 4. Remplacer le port externe (8080) par una variable `container_port`. Essayer avec ou sans valeur par defaut.
 5. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
-6. Rajouter un output sur le champ `ip_address` du container et la visualier après un `tofu apply` avec `tofu output`
+6. Rajouter un outputde nom `ip_address` et de valeur `localhhost:<port>` et la visualier après un `tofu apply` avec `tofu output`
 
 ## Exercice 2 (sans docker)
 
@@ -106,3 +106,6 @@ resource "docker_image" "hello_world" {
 3. Créer "manuellement" un ressource_group sur le portail Azure
 4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
 5. Dans votre configuration, utiliser une datasource pour référencer la ressource_group et créer une VM dedans.  Voir [resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) et [azurerm_virtual_machine](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine)
+
+## Exercice 4
+
