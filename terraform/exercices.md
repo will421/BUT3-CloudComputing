@@ -39,13 +39,6 @@ resource "docker_image" "hello_world" {
 4. Lancer `tofu apply` avec le conteneur déja lancé
 5. Supprimer le conteneur avec `docker container rm` et lancer `tofu apply`
 
-## Exercice 1 (sans docker)
-
-1. Créer une configuration Terraform créant un fichier local avec le contenu "test". Voir [local_file](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file).
-2. Lancer `tofu plan` et étudier le résultat
-3. Lancer `tofu apply` et vérifier la présence du fichier
-4. Supprimer le fichier et lancer `tofu apply`
-
 ## Exercice 1 (Azure)
 
 1. Se connecter à Azure avec la commande `az login`
@@ -67,14 +60,6 @@ resource "docker_image" "hello_world" {
 5. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
 6. Rajouter un output de nom `ip_address` et de valeur `localhost:<port>` et la visualier après un `tofu apply` avec `tofu output`
 
-## Exercice 2 (sans docker)
-
-1. Reprendre l'exercice 1
-2. Lire le début de la documentation sur les variables : https://developer.hashicorp.com/terraform/language/values/variables
-3. Créer une variable `permission` pour contenir les permissions du fichier (ex: "0666") et l'utilisation sur le fichier. Essayer avec ou sans valeur par defaut.
-4. Lire le début de la documentation sur les outputs : https://developer.hashicorp.com/terraform/language/values/outputs
-5. Rajouter un output sur le champ `content_md5` du fichier et la visualier après un `tofu apply` avec `tofu output`. Le comparer avec le md5 généré avec la commande `md5sum`
-
 ## Exercice 2 (Azure)
 
 1. Reprendre l'exercice 1
@@ -91,14 +76,6 @@ resource "docker_image" "hello_world" {
 4. Télécharger l'image docker `nginx` en ligne de commande : `docker pull docker.io/nginx`
 5. Dans votre configuration, utiliser une datasource pour référencer cette image dans votre conteneur. Voir [image](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
 
-## Exercice 3 (sans docker)
-
-1. Repartir de l'exercice 3
-2. Supprimer le fichier avec `tofu destroy` et vérifier qu'il n'existe plus
-3. Créer "manuellement" un fichier `external.txt` avec le contenu `external`
-4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
-5. Dans votre configuration, utiliser une datasource pour copier le contenu du fichier `external.txt` dans un nouveau fichier. Voir [local_file](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
-
 ## Exercice 3 (Azure)
 
 1. Repartir de l'exercice 3
@@ -107,51 +84,15 @@ resource "docker_image" "hello_world" {
 4. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
 5. Dans votre configuration, utiliser une datasource pour référencer la ressource_group et créer une VM dedans.  Voir [resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) et [azurerm_virtual_machine](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine)
 
+
 ## Exercice 4
 
-Nous voulons surveiller notre machine local au travers d'une page web avec Grafana.
+1. Repartir de l'exercice 3
+2. Créer un fichier `index.html` avec le contenu de votre choix
+2. Ajouter un volume à votre container mappant `/usr/share/nginx/html/index.html` vers votre le fichier `index.html` précédemment créé. Ex: `${abspath(path.module)}/index.html`
+3. Tester que la page web est bien affiché par votre navigateur
+4. Utiliser la fonction [templatefile](https://developer.hashicorp.com/terraform/language/functions/templatefile) pour générer un fichier html à partir d'une variable de votre configuration.
+  * Créer un fichier `index.html.tpl` basé sur `index.html`. Ce fichier template devra avoir un titre basé sur une variable `title`
+  * Utiliser la fonction `templatefile` pour affecter une valeur à `title` et la resource `local_file` pour générer `index.html`
+5. Confirmer que le serveur web renvoie la page générée.
 
-1. Créer le manuellement le fichier `prometheus.yml` contenant :
-```
-global:
-  scrape_interval: 15s
-
-scrape_configs:
-  - job_name: 'node'
-    static_configs:
-      - targets: ['node-exporter:9100']
-```
-2. Créer manuellement un dossier `grafana-provisioning` et créer un fichier de nom `grafana-provisioning/dashboards/system-stats.json` contenant
-```
-apiVersion: 1
-
-datasources:
-  - name: Prometheus
-    type: prometheus
-    access: proxy
-    url: http://prometheus:9090
-    isDefault: true
-```
-3. Créer un reseau docker appelé `monitoring_network`
-2. Créer une nouvelle configuration lancant 3 conteneurs :
-* nom: prometheus
-  * image : docker.io/prom/prometheus
-  * port : 9090 -> 9090
-  * volume : < chemin vers votre fichier prometheus > -> /etc/prometheus/prometheus.yml
-  * networks: monitoring_network
-* nom:grafana
-  * image : docker.io/grafana/grafana
-  * port : 3000 -> 3000
-  * volume : < chemin vers votre fichier grafana-provisioning > -> /etc/grafana/provisioning
-  * networks: monitoring_network
-* nom: node-exporter
-  * image : docker.io/prom/node-exporter
-  * port : 9100 -> 9100
-  * volume : 
-    - "/proc:/host/proc:ro"
-    - "/sys:/host/sys:ro"
-    - "/:/rootfs:ro"
-  * env:
-      - name: NODE_EXPORTER_TEXTFILE_DIRECTORY
-        value: "/host/proc"
-  * networks: monitoring_network
