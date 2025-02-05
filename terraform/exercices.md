@@ -153,3 +153,10 @@ datasources:
 7. Cliquer sur Dashboards > Create dashboard > Import dashboard > Discard
 8. Mettre l'id `1860` et cliquer sur `Load`
 9. Dans le champ "Prometheus", selectionner la datasource "Prometheus" et cliquer sur "Import"
+
+## Exercice 6 
+
+1. Reprendre l'exercice 5
+2. Remplacer la configuration avec 2 modules
+  * un pour grafana et son volume `grafana_data`
+  * un pour prometheus et node-exporter
