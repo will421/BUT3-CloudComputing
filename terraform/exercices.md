@@ -96,3 +96,9 @@ resource "docker_image" "hello_world" {
   * Utiliser la fonction `templatefile` pour affecter une valeur à `title` et la resource `local_file` pour générer `index.html`
 5. Confirmer que le serveur web renvoie la page générée.
 
+## Exercice 4 (Azure)
+
+1. Repartir de l'exercice 3
+2. Créer une VM
+  * Il y a beaucoup de ressources à créer pour faire tourner une VM : `azurerm_resource_group`, `azurerm_virtual_network`, `azurerm_subnet`, `azurerm_network_security_group`, `azurerm_public_ip`, `azurerm_network_interface`, `azurerm_network_interface_security_group_association`, `azurerm_linux_virtual_machine`
+  * Aidez-vous de la doc ou d'une IA pour vous aider sur liens entres les différentes ressources
