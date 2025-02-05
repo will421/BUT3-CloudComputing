@@ -74,7 +74,7 @@ resource "docker_image" "hello_world" {
 2. Supprimez vos images et conteneurs terraform avec `tofu destroy`
 3. Lire le début de la doc sur les [data sources](https://developer.hashicorp.com/terraform/language/data-sources)
 4. Télécharger l'image docker `nginx` en ligne de commande : `docker pull docker.io/nginx`
-5. Dans votre configuration, utiliser une datasource pour référencer cette image dans votre conteneur. Voir [image](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image)
+5. Dans votre configuration, utiliser une datasource pour référencer cette image dans votre conteneur. Voir [image](https://registry.terraform.io/providers/abh80/docker/latest/docs/data-sources/image). L'idée est de remplacer la ressource `docker_image` par une datasource.
 
 ## Exercice 3 (Azure)
 
