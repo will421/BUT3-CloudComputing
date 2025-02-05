@@ -102,3 +102,54 @@ resource "docker_image" "hello_world" {
 2. Créer une VM
   * Il y a beaucoup de ressources à créer pour faire tourner une VM : `azurerm_resource_group`, `azurerm_virtual_network`, `azurerm_subnet`, `azurerm_network_security_group`, `azurerm_public_ip`, `azurerm_network_interface`, `azurerm_network_interface_security_group_association`, `azurerm_linux_virtual_machine`
   * Aidez-vous de la doc ou d'une IA pour vous aider sur liens entres les différentes ressources
+
+## Exercice 5
+
+Nous voulons surveiller notre machine local au travers d'une page web avec Grafana.
+
+1. Créer manuellement le fichier `prometheus.yml` contenant :
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+```
+2. Créer manuellement un dossier `grafana-provisioning` et créer un fichier de nom `grafana-provisioning/datasources/datasources.yml` contenant
+```
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+```
+
+3. Ajouter un réseau docker à la configuration appelé `monitoring_network`
+4. Ajouter un volume docker à la configuration appelé `grafana_data`
+5. Ajouter 3 conteneurs à la configuration :
+* nom: prometheus
+  * image : docker.io/prom/prometheus
+  * volume : "chemin vers votre fichier prometheus" -> /etc/prometheus/prometheus.yml
+  * networks: monitoring_network
+* nom: grafana
+  * image : docker.io/grafana/grafana
+  * port : 3000 -> 3000
+  * volume : "chemin vers votre dossier grafana-provisioning" -> /etc/grafana/provisioning
+  * volume : grafana_data -> /var/lib/grafana
+  * networks: monitoring_network
+* nom: node-exporter
+  * image : docker.io/prom/node-exporter
+  * networks: monitoring_network
+6. Se connecter à grafana sur http://localhost:3000 et les identifiants admin/admin.
+7. Cliquer sur Dashboards > Create dashboard > Import dashboard > Discard
+8. Mettre l'id `1860` et cliquer sur `Load`
+9. Dans le champ "Prometheus", selectionner la datasource "Prometheus" et cliquer sur "Import"
