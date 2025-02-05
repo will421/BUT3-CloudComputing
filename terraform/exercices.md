@@ -154,9 +154,22 @@ datasources:
 8. Mettre l'id `1860` et cliquer sur `Load`
 9. Dans le champ "Prometheus", selectionner la datasource "Prometheus" et cliquer sur "Import"
 
+## Exercice 5 (Azure)
+
+1. Reprendre l'exercice 4
+2. `azurerm_linux_virtual_machine` possède un champ permettant de lancer un script au demarrage de la VM, utiliser ce champs pour installer docker à la création de la VM
+
+Attention, utiliser l'option `--assume-yes` avec `apt-get install` pour que le script ne coince pas sur une attente de réponse
+
 ## Exercice 6 
 
 1. Reprendre l'exercice 5
 2. Remplacer la configuration avec 2 modules
   * un pour grafana et son volume `grafana_data`
   * un pour prometheus et node-exporter
+
+## Exercice 7
+
+1. Reprendre l'exercice 6
+2. Generer `datasource.yml` à partir d'un template. Remplacer dans le champ 'url' le nom du container avec celui du container prometheus
+3. Generer `prometheus.yml` à partir d'un template. Remplacer 'node-exporter' par le nom du container node-exporter
